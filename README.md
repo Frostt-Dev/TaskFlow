@@ -122,37 +122,31 @@ We have created a full **[TaskFlow_Postman_Collection.json](file:///c:/Users/Kri
 
 ---
 
-## ☁️ Deployment Instructions
+## ☁️ Live Deployments
+
+The application is deployed live and configured to interact directly with your MongoDB Atlas database:
+- **GitHub Repository**: [https://github.com/Frostt-Dev/TaskFlow](https://github.com/Frostt-Dev/TaskFlow)
+- **Live Frontend (Netlify)**: [https://taskflow-krish-mern.netlify.app](https://taskflow-krish-mern.netlify.app)
+- **Live Backend API (Render)**: [https://taskflow-xblx.onrender.com](https://taskflow-xblx.onrender.com)
+
+---
+
+## ☁️ Deployment Reference
 
 ### 1. Database (MongoDB Atlas)
 1. Sign in to your [MongoDB Atlas account](https://www.mongodb.com/cloud/atlas).
-2. Create a Free-Tier Shared Cluster.
-3. Under **Network Access**, whitelist connection from anywhere (`0.0.0.0/0`) since cloud deployment IPs vary.
-4. Under **Database Access**, create a user with read/write permissions.
-5. Click **Connect** -> **Connect your application** and copy the URI string.
+2. Create a Free-Tier Shared Cluster (or reuse an existing one by appending a database name, e.g. `/deskflow` to your connection string).
+3. Under **Network Access**, whitelist `0.0.0.0/0` so public servers can connect.
 
 ### 2. Backend (Render)
-1. Sign in to [Render](https://render.com/).
-2. Click **New +** -> Select **Web Service**.
-3. Link your GitHub repository.
-4. Set the following settings:
-   - **Root Directory**: `backend`
-   - **Environment**: `Node`
-   - **Build Command**: `npm install`
-   - **Start Command**: `npm start`
-5. In the **Environment Variables** section, add:
-   - `MONGODB_URI` = *Your MongoDB Atlas connection string*
-   - `PORT` = `5000`
-6. Click **Deploy**. Copy the deployed Render URL (e.g., `https://taskflow-api.onrender.com`).
+Our Express backend is hosted on Render via their automated blueprint system using the connected GitHub repo:
+- **Build Settings**: Root: `backend`, Build: `npm install`, Start: `npm start`.
+- **Environment Variables**:
+  - `MONGODB_URI` = `mongodb+srv://Krish:Shadow2020@cluster0.upksuo3.mongodb.net/deskflow?retryWrites=true&w=majority`
+  - `PORT` = `5000`
 
 ### 3. Frontend (Netlify)
-1. Sign in to [Netlify](https://www.netlify.com/).
-2. Click **Add new site** -> **Import an existing project**.
-3. Link your GitHub repository.
-4. Configure build settings:
-   - **Root Directory**: `frontend`
-   - **Build Command**: `npm run build`
-   - **Publish Directory**: `dist`
-5. In the **Environment Variables** section, add:
-   - `VITE_API_URL` = *Your deployed Render URL* (e.g., `https://taskflow-api.onrender.com`)
-6. Click **Deploy Site**. Your Netlify site will be fully operational and successfully communicate with the Render API!
+Our React application is hosted on Netlify and connected directly to the active Render instance:
+- **Build Settings**: Root: `frontend`, Build: `npm run build`, Publish: `dist`.
+- **Environment Variables**:
+  - `VITE_API_URL` = `https://taskflow-xblx.onrender.com`
